@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  agentic-rag-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: agentic-rag:latest
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./credentials.json:/app/credentials.json:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
+
+  # Optional: Run periodic ingestion in a sidecar (if using a scheduler like Nomad or Kubernetes)
+  agentic-rag-ingest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: agentic-rag:latest
+    command: ["python", "-m", "agentic_rag.ingest"]
+    env_file:
+      - .env
+    volumes:
+      - ./credentials.json:/app/credentials.json:ro
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M

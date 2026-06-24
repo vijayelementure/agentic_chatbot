@@ -1,0 +1,17 @@
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
+google-genai
+pinecone
+beautifulsoup4
+requests
+python-dotenv
+pypdf
+python-docx
+lxml
+tenacity
+pydantic
+pydantic-settings
+fastapi
+uvicorn[standard]
+playwright

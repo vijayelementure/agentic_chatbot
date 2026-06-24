@@ -1,0 +1,12 @@
+services:
+  agentic-rag-api:
+    build: .
+    image: agentic-rag:latest
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./service_account.json:/app/service_account.json:ro
+    restart: unless-stopped
