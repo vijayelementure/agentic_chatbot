@@ -15,3 +15,4 @@ pydantic-settings
 fastapi
 uvicorn[standard]
 playwright
+mangum
