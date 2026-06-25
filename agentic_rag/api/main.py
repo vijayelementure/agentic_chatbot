@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from mangum import Mangum
 
 from agentic_rag import __version__
 from agentic_rag.agent import AgenticRAG
@@ -66,3 +67,4 @@ def create_app() -> FastAPI:
 
 
 app = create_app()
+handler = Mangum(app)
