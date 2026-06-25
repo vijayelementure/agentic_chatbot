@@ -1,0 +1,19 @@
+ARG FUNCTION_DIR="/var/task"
+
+FROM mcr.microsoft.com/playwright/python:v1.54.0-noble
+
+ARG FUNCTION_DIR
+
+WORKDIR ${FUNCTION_DIR}
+
+COPY requirements.txt .
+
+RUN pip install --target ${FUNCTION_DIR} -r requirements.txt
+
+RUN pip install --target ${FUNCTION_DIR} awslambdaric
+
+COPY . .
+
+ENTRYPOINT ["/usr/bin/python", "-m", "awslambdaric"]
+
+CMD ["agentic_rag.api.main.handler"]
