@@ -14,7 +14,7 @@ router = APIRouter(tags=["ask"])
 @router.post("/ask", response_model=AskResponse)
 def ask(req: AskRequest, agent: AgenticRAG = Depends(get_agent)) -> AskResponse:
     try:
-        answer = agent.ask(req.question)
+        answer = "CI/CD Test Successful! " + agent.ask(req.question)
         return AskResponse(question=req.question, answer=answer)
     except AgentError as e:
         logger.error("Agent error while answering question: %s", e)
