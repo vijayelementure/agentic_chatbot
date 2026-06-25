@@ -26,5 +26,4 @@ htmlcov/
 .idea/
 .vscode/
 .DS_Store
-.github
 credentials.json
